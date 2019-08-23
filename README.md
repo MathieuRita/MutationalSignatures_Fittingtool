@@ -4,13 +4,24 @@ MutationalSignatures_Fittingtool is a R package that allows the user to fit 96-c
 
 ### Contents
 
-* Mathematical description of the problem
-	* Opimization problem
-	* Biological constraints
+* [Mathematical description of the problem](#Mathematical-description-of-the-problem)
+	* [Opimization-problem](#Opimization-problem)
+	* [Biological-constraints](#Biological-constraints)
 
-* General descrption of the tool
+* [General description of the tool](#General-description-of-the-tool)
 
-* Benchmarking of the tool
+* [Comparison with existing tools](#Comparison-with-existing-tools)
+
+### Mathematical description of the problem
+
+## Opimization problem
+
+## Biological constraints
+
+### General descrption of the tool
 
 ![fitting_tool_schem](https://user-images.githubusercontent.com/35176066/63618868-1c8bf000-c5bb-11e9-85c0-fe4803314651.png)
+
+### Comparison with existing tools
+
 
