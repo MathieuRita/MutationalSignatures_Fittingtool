@@ -14,7 +14,7 @@ MutationalSignatures_Fittingtool is a R package that allows the user to fit 96-c
 
 ## Mathematical description of the problem
 
-[!equation](https://latex.codecogs.com/gif.latex?\sum)
+![equation](https://latex.codecogs.com/gif.latex?\sum)
 
 ### Opimization problem
 
