@@ -30,7 +30,7 @@ remove_small_exposure=function(samples,
     if(length(set_of_signature)>1){
       
       # We fit or samples
-      fit=fit_to_signatures(samples,signatures[,set_of_signature])
+      fit=fit_to_signatures(samples,as.matrix(signatures[,set_of_signature]))
       
       #Compute the mean exposure by signature
       meanExpo=rowMeans(fit$contribution)

@@ -5,6 +5,7 @@ sparse_filter = function(mut_mat,
                          initial_cutoff=0.2,
                          cutoff_add=0.1,
                          cutoff_cs=0.01,
+                         cutoff_remove=0.2,
                          noise="Gaussian",
                          num_ite=2)
 
@@ -23,7 +24,7 @@ sparse_filter = function(mut_mat,
     - cutoff_add: cutoff for the adding layer
     - cutoff_remove: cutoff for the removing layer
     - cutoff_exposure: cutoff for the final layer
-    - noise: "Gaussian" or "Poisson": for the resampling, select the type of noise added to the data
+    - noise: Gaussian or Poisson: for the resampling, select the type of noise added to the data
         
     Returns:
     - sieve: for each samples, a binary list (0 or 1) indicating which signature is active in a sample
@@ -35,6 +36,8 @@ sparse_filter = function(mut_mat,
     # For each sample, find the set of active signatures
     
     for(i in seq(1,ncol(mut_mat))){
+        
+        print(i)
 
         # Step 0 : Resampling (dependingo on the type of noise the user choose)
 
@@ -71,17 +74,17 @@ sparse_filter = function(mut_mat,
         for(j in seq(1,num_ite)){
             #Removing layer
             #final_set_of_signature=remove_specific_signatures(samples,signatures,set_of_signature,cutoff=200*cutoff)
-            final_set_of_signature=remove_signatures(samples,signatures,final_set_of_signature,cutoff=cutoff_remove)
+            set_of_signature=remove_signatures(samples,signatures,set_of_signature,cutoff=cutoff_remove)
             
             # Adding layer
-            final_set_of_signature=add_signatures(samples,signatures,final_set_of_signature,cutoff_add=0.5*cutoff_add,cutoff_cs=0.2*cutoff_cs)
+            set_of_signature=add_signatures(samples,signatures,set_of_signature,cutoff_add=0.5*cutoff_add,cutoff_cs=0.2*cutoff_cs)
         }
 
         # Step 3: Eventually remove the signatures with small activities
-        final_set_of_signature=remove_small_exposure(samples,signatures,final_set_of_signature,cutoff_exposure=0.05)
+        set_of_signature=remove_small_exposure(samples,signatures,set_of_signature,cutoff_exposure=0.05)
         
         # Step 4: Write in the sieve the list of active signatures
-        sieve[final_set_of_signature,i]=1
+        sieve[set_of_signature,i]=1
         
     }
     

@@ -8,10 +8,10 @@ library('GenomeInfoDb')
 library('MutationalPatterns')
 library('plotrix')
 library("ggplot2")
-library("BSgenome.Hsapiens.UCSC.hg19")
+#library("BSgenome.Hsapiens.UCSC.hg19")
 library("reshape2")
 library('knitr')
-library("plotly")
+#library("plotly")
 
 ############
 ## UTILS  ##

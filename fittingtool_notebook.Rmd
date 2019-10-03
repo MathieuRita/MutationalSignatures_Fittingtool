@@ -1,0 +1,90 @@
+---
+title: "Fitting tool notebook"
+output: html_notebook
+---
+
+Load libraries and util
+
+```{r}
+library('NMF')
+library("ggplot2")
+library('MutationalPatterns')
+source(file="utils.R")
+```
+
+Load data
+```{r}
+breast_cancer = read.csv(file="data/breast_cancer.csv",header=TRUE)
+cosmic_signatures = read.csv(file="data/cosmic_signatures.csv",header=TRUE)
+cosmic_signatures=cosmic_signatures[,3:ncol(cosmic_signatures)]
+BC_exposure= read.delim(file = "data/extanded_breast_cancer_expousre.txt",header=T,sep="\t")
+noise_BC_samples= read.delim(file = "data/noise_breast_cancer_samples.txt",header=T)
+```
+
+```{r}
+as.matrix(BC_exposure)
+nrow(BC_exposure)
+ncol(BC_exposure)
+rownames(BC_exposure)
+```
+
+
+```{r}
+strsplit(colnames(BC_exposure)[1],"\\.")[[1]]
+
+toString(BC_exposure[1,])
+
+strsplit(toString(BC_exposure[1,])," ")[[1]]
+```
+
+Breast cancer exposure
+```{r}
+BC_exposure= read.delim(file = "data/extanded_breast_cancer_expousre.txt",header=T,sep="\t")
+
+BC_expo=matrix(0, nrow=560, ncol=66)
+
+colnames(BC_expo)=strsplit(colnames(BC_exposure)[1],"\\.")[[1]]
+
+for(i in seq(1,560)){
+  spl=strsplit(toString(BC_exposure[i,])," ")[[1]]
+  for(j in seq(1,66)){
+    BC_expo[i,j]=as.numeric(spl[j+1])
+  }
+}
+
+```
+
+Breast cancer samples (ideal + noise)
+```{r}
+BC_samples=matrix(0, nrow=96, ncol=560)
+
+colnames(BC_samples)=strsplit(colnames(noise_BC_samples)[1],"\\.")[[1]]
+
+for(i in seq(1,96)){
+  spl=strsplit(toString(noise_BC_samples[i,])," ")[[1]]
+  for(j in seq(1,560)){
+    BC_samples[i,j]=as.numeric(spl[j+1])
+  }
+}
+```
+
+```{r}
+source(file="add_signatures.R")
+source(file="fitting_probabilities.R")
+#source(file="Hparams.R")
+#source(file="main.R")
+source(file="probabilities_to_exposure.R")
+source(file="remove_signatures.R")
+source(file="remove_small_exposure.R")
+source(file="remove_specific_signatures.R")
+source(file="sparse_filter.R")
+```
+
+```{r}
+probs=fitting_probabilities(mut_mat=BC_samples[,1:5],
+                      signatures = cosmic_signatures,
+                      ind_prior_knowledge = c(1))
+```
+
+
+
